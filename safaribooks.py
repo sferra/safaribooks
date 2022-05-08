@@ -364,6 +364,12 @@ class SafariBooks:
             os.mkdir(books_dir)
 
         self.BOOK_PATH = os.path.join(books_dir, self.clean_book_title)
+        if args.epub_destination:
+            epub_destination = os.path.expanduser(args.epub_destination)
+        else:
+            epub_destination = self.BOOK_PATH
+        self.epub_file = os.path.join(epub_destination, self.book_id + ".epub")
+
         self.display.set_output_dir(self.BOOK_PATH)
         self.css_path = ""
         self.images_path = ""
@@ -407,7 +413,7 @@ class SafariBooks:
         if not args.no_cookies:
             json.dump(self.session.cookies.get_dict(), open(COOKIES_FILE, "w"))
 
-        self.display.done(os.path.join(self.BOOK_PATH, self.book_id + ".epub"))
+        self.display.done(self.epub_file)
         self.display.unregister()
 
         if not self.display.in_error and not args.log:
@@ -1051,7 +1057,7 @@ class SafariBooks:
             os.remove(zip_file + ".zip")
 
         shutil.make_archive(zip_file, 'zip', self.BOOK_PATH)
-        os.rename(zip_file + ".zip", os.path.join(self.BOOK_PATH, self.book_id) + ".epub")
+        os.rename(zip_file + ".zip", self.epub_file)
 
 
 # MAIN
@@ -1086,6 +1092,9 @@ if __name__ == "__main__":
         "--preserve-log", dest="log", action='store_true', help="Leave the `info_XXXXXXXXXXXXX.log`"
                                                                 " file even if there isn't any error."
     )
+    arguments.add_argument(
+        "--epub-destination", metavar="<EPUB DESTINATION DIR>", help="Destination for the generated EPUB file."
+    )
     arguments.add_argument("--help", action="help", default=argparse.SUPPRESS, help='Show this help message.')
     arguments.add_argument(
         "bookid", metavar='<BOOK ID>',
@@ -1094,6 +1103,20 @@ if __name__ == "__main__":
     )
 
     args_parsed = arguments.parse_args()
+
+    # only proceed if the EPUB destination is valid
+    if args_parsed.epub_destination:
+        expanded_epub_destination = os.path.expanduser(args_parsed.epub_destination)
+        if not os.path.exists(expanded_epub_destination):
+            print(f"The EPUB destination {expanded_epub_destination} doesn't exist.")
+            sys.exit(1)
+        if not os.path.isdir(expanded_epub_destination):
+            print(f"The EPUB destination {expanded_epub_destination} must be a directory.")
+            sys.exit(1)
+        if not os.access(expanded_epub_destination, os.W_OK):
+            print(f"Can't write to the EPUB destination {expanded_epub_destination}.")
+            sys.exit(1)
+
     if args_parsed.cred or args_parsed.login:
         user_email = ""
         pre_cred = ""
