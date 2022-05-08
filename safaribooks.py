@@ -370,7 +370,12 @@ class SafariBooks:
             epub_destination = os.path.expanduser(args.epub_destination)
         else:
             epub_destination = self.BOOK_PATH
-        self.epub_file = os.path.join(epub_destination, self.book_id + ".epub")
+
+        if args.clean_epub_file_name:
+            epub_file_name = self.clean_book_title
+        else:
+            epub_file_name = self.book_id
+        self.epub_file = os.path.join(epub_destination, epub_file_name + ".epub")
 
         self.display.set_output_dir(self.BOOK_PATH)
         self.css_path = ""
@@ -1096,6 +1101,9 @@ if __name__ == "__main__":
     )
     arguments.add_argument(
         "--epub-destination", metavar="<EPUB DESTINATION DIR>", help="Destination for the generated EPUB file."
+    )
+    arguments.add_argument(
+        "--clean-epub-file-name", action='store_true', help="Use a human readable name for the generated EPUB file."
     )
     arguments.add_argument("--help", action="help", default=argparse.SUPPRESS, help='Show this help message.')
     arguments.add_argument(

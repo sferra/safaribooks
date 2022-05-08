@@ -78,9 +78,10 @@ optional arguments:
                        export the EPUB to E-Readers like Amazon Kindle.
   --preserve-log       Leave the `info_XXXXXXXXXXXXX.log` file even if there
                        isn't any error.
-
   --epub-destination <EPUB DESTINATION DIR>
                        Destination for the generated EPUB file.
+  --clean-epub-file-name
+                       Use a human readable name for the generated EPUB file
   --help               Show this help message.
 ```
   
