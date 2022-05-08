@@ -31,6 +31,8 @@ SAFARI_BASE_URL = "https://" + SAFARI_BASE_HOST
 API_ORIGIN_URL = "https://" + API_ORIGIN_HOST
 PROFILE_URL = SAFARI_BASE_URL + "/profile/"
 
+DOWNLOAD_CHUNK_SIZE = 1024 * 1024 # in bytes
+
 # DEBUG
 USE_PROXY = False
 PROXIES = {"https": "https://127.0.0.1:8080"}
@@ -585,7 +587,7 @@ class SafariBooks:
 
         file_ext = response.headers["Content-Type"].split("/")[-1]
         with open(os.path.join(self.images_path, "default_cover." + file_ext), 'wb') as i:
-            for chunk in response.iter_content(1024):
+            for chunk in response.iter_content(DOWNLOAD_CHUNK_SIZE):
                 i.write(chunk)
 
         return "default_cover." + file_ext
@@ -898,7 +900,7 @@ class SafariBooks:
                 return
 
             with open(image_path, 'wb') as img:
-                for chunk in response.iter_content(1024):
+                for chunk in response.iter_content(DOWNLOAD_CHUNK_SIZE):
                     img.write(chunk)
 
         self.images_done_queue.put(1)
