@@ -53,7 +53,8 @@ Like: `https://www.safaribooksonline.com/library/view/test-driven-development-wi
 ```shell
 $ python3 safaribooks.py --help
 usage: safaribooks.py [--cred <EMAIL:PASS> | --login] [--no-cookies]
-                      [--kindle] [--preserve-log] [--help]
+                      [--kindle] [--preserve-log]
+                      [--epub-destination <EPUB DESTINATION DIR>] [--help]
                       <BOOK ID>
 
 Download and generate an EPUB of your favorite books from Safari Books Online.
@@ -77,6 +78,9 @@ optional arguments:
                        export the EPUB to E-Readers like Amazon Kindle.
   --preserve-log       Leave the `info_XXXXXXXXXXXXX.log` file even if there
                        isn't any error.
+
+  --epub-destination <EPUB DESTINATION DIR>
+                       Destination for the generated EPUB file.
   --help               Show this help message.
 ```
   
