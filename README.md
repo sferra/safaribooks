@@ -55,6 +55,7 @@ $ python3 safaribooks.py --help
 usage: safaribooks.py [--cred <EMAIL:PASS> | --login] [--no-cookies]
                       [--kindle] [--preserve-log]
                       [--epub-destination <EPUB DESTINATION DIR>] [--clean-epub-file-name]
+                      [--cache-dir <CACHE DIR>]
                       [--help]
                       <BOOK ID>
 
@@ -83,6 +84,8 @@ optional arguments:
                        Destination for the generated EPUB file.
   --clean-epub-file-name
                        Use a human readable name for the generated EPUB file
+  --cache-dir <CACHE DIR>
+                       Directory for intermediate files, like downloads.
   --help               Show this help message.
 ```
   

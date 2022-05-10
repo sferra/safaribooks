@@ -361,7 +361,11 @@ class SafariBooks:
         self.clean_book_title = "".join(self.escape_dirname(self.book_title).split(",")[:2]) \
                                 + " ({0})".format(self.book_id)
 
-        books_dir = os.path.join(PATH, "Books")
+        if args.cache_dir:
+            books_dir = os.path.expanduser(args.cache_dir)
+        else:
+            books_dir = os.path.join(PATH, "Books")
+
         if not os.path.isdir(books_dir):
             os.mkdir(books_dir)
 
@@ -1104,6 +1108,9 @@ if __name__ == "__main__":
     )
     arguments.add_argument(
         "--clean-epub-file-name", action='store_true', help="Use a human readable name for the generated EPUB file."
+    )
+    arguments.add_argument(
+        "--cache-dir", metavar="<CACHE DIR>", help="Directory for intermediate files, like downloads."
     )
     arguments.add_argument("--help", action="help", default=argparse.SUPPRESS, help='Show this help message.')
     arguments.add_argument(
