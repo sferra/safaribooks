@@ -54,7 +54,8 @@ Like: `https://www.safaribooksonline.com/library/view/test-driven-development-wi
 $ python3 safaribooks.py --help
 usage: safaribooks.py [--cred <EMAIL:PASS> | --login] [--no-cookies]
                       [--kindle] [--preserve-log]
-                      [--epub-destination <EPUB DESTINATION DIR>] [--help]
+                      [--epub-destination <EPUB DESTINATION DIR>] [--clean-epub-file-name]
+                      [--help]
                       <BOOK ID>
 
 Download and generate an EPUB of your favorite books from Safari Books Online.
